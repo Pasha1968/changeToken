@@ -6,120 +6,53 @@ import Navbar from './Navbar'
 import Main from './Main'
 import './App.css'
 //front - end :(
+//
+
+//App1js - это обменик с метамаском, а это попытка сделать все своё используя WEB3JS
+
+//https://web3js.readthedocs.io/en/v1.3.4/web3.html
+//web = new Web3()//not connected to blockchain
+
+//need 
+// 1 : connect app to blockchain  web3.js
+// 2 : connect browser to blockchain (metamask)_
+
+//https://github.com/MetaMask/metamask-mobile/blob/develop/app/core/WalletConnect.js
 class App extends Component {
 
-  // async componentWillMount() {
-  //   await this.loadWeb3()
-  //   await this.loadBlockchainData()
-  // }
-
-  // async loadBlockchainData() {
-  //   const web3 = window.web3
-
-  //   const accounts = await web3.eth.getAccounts()
-  //   this.setState({ account: accounts[0] })
-
-  //   const ethBalance = await web3.eth.getBalance(this.state.account)
-  //   this.setState({ ethBalance })
-
-  //   // Load Token
-  //   const networkId =  await web3.eth.net.getId()
-  //   const tokenData = Token.networks[networkId]
-  //   if(tokenData) {
-  //     const token = new web3.eth.Contract(Token.abi, tokenData.address)
-  //     this.setState({ token })
-  //     let tokenBalance = await token.methods.balanceOf(this.state.account).call()
-  //     this.setState({ tokenBalance: tokenBalance.toString() })
-  //   } else {
-  //     window.alert('Token contract not deployed to detected network.')
-  //   }
-
-  //   // Load EthSwap
-  //   const ethSwapData = EthSwap.networks[networkId]
-  //   if(ethSwapData) {
-  //     const ethSwap = new web3.eth.Contract(EthSwap.abi, ethSwapData.address)
-  //     this.setState({ ethSwap })
-  //   } else {
-  //     window.alert('EthSwap contract not deployed to detected network.')
-  //   }
-
-  //   this.setState({ loading: false })
-  // }
-
-  // async loadWeb3() {
-  //   if (window.ethereum) {
-  //     window.web3 = new Web3(window.ethereum)
-  //     await window.ethereum.enable()
-  //   }
-  //   else if (window.web3) {
-  //     window.web3 = new Web3(window.web3.currentProvider)
-  //   }
-  //   else {
-  //     window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
-  //   }
-  // }
-
-  buyTokens = (etherAmount) => {
-    this.setState({ loading: true })
-    this.state.ethSwap.methods.buyTokens().send({ value: etherAmount, from: this.state.account }).on('transactionHash', (hash) => {
-      this.setState({ loading: false })
-    })
+//https://github.com/MetaMask/metamask-mobile/blob/develop/app/core/Encryptor.js
+  async Loaddata(){
+  window.web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
+  window.web3.eth.getAccounts().then(console.log);
   }
-
-  sellTokens = (tokenAmount) => {
-    this.setState({ loading: true })
-    this.state.token.methods.approve(this.state.ethSwap.address, tokenAmount).send({ from: this.state.account }).on('transactionHash', (hash) => {
-      this.state.ethSwap.methods.sellTokens(tokenAmount).send({ from: this.state.account }).on('transactionHash', (hash) => {
-        this.setState({ loading: false })
-      })
-    })
+  async componentWillMount() {
+    await this.Loaddata()
   }
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      account: '',
-      token: {},
-      ethSwap: {},
-      ethBalance: '0',
-      tokenBalance: '0',
-      loading: true
+  async componentWillMount() {
+    //await this.loadWeb3()
+  }
+  async loadWeb3() {//metamask info
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+      await window.ethereum.enable()
+    }
+    else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider)
+    }
+    else {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
     }
   }
 
+  
   render() {
     let content
-    if(this.state.loading) {
-      content = <p id="loader" className="text-center">Loading...</p>
-    } else {
-      content = <Main
-        ethBalance={this.state.ethBalance}
-        tokenBalance={this.state.tokenBalance}
-        buyTokens={this.buyTokens}
-        sellTokens={this.sellTokens}
-      />
-    }
+    
 
     return (
       <div>
-        <Navbar account={this.state.account} />
-        <div className="container-fluid mt-5">
-          <div className="row">
-            <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
-              <div className="content mr-auto ml-auto">
-                <a
-                  href="http://www.dappuniversity.com/bootcamp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                </a>
-
-                {content}
-
-              </div>
-            </main>
-          </div>
-        </div>
+        Hello World
+        
       </div>
     );
   }
