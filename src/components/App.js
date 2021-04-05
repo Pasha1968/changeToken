@@ -18,7 +18,7 @@ class App extends Component {
     const web3 = window.web3
 
     const accounts = await web3.eth.getAccounts()
-    this.setState({ account: accounts[1] })
+    this.setState({ account: accounts[2] })
 
     const ethBalance = await web3.eth.getBalance(this.state.account)
     this.setState({ ethBalance })
@@ -110,7 +110,7 @@ class App extends Component {
         <Navbar account={this.state.account} />
         <div className="container-fluid mt-5">
           <div className="row">
-          	<div class="col-sm">
+          	<div className="col-sm">
             <main role="main" className="col-lg-8 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
               <div className="content mr-auto ml-auto">
                 <a
