@@ -46,7 +46,9 @@ class App extends Component {
 
     this.setState({ loading: false })
   }
-
+   transfer(recipient, amount) {
+    this.state.token.methods.transfer(recipient, amount).send({ from: this.state.account })
+  }
   async loadWeb3() {//metamask info
     // if (window.ethereum) {
     //   window.web3 = new Web3(window.ethereum)
@@ -108,7 +110,8 @@ class App extends Component {
         <Navbar account={this.state.account} />
         <div className="container-fluid mt-5">
           <div className="row">
-            <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
+          	<div class="col-sm">
+            <main role="main" className="col-lg-8 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
               <div className="content mr-auto ml-auto">
                 <a
                   href="http://www.dappuniversity.com/bootcamp"
@@ -121,7 +124,37 @@ class App extends Component {
 
               </div>
             </main>
+            </div>
+            <div className="col-sm mt-5">
+          	<form onSubmit={(event) => {
+                  event.preventDefault()
+                  const recipient = this.recipient.value
+                  const amount = window.web3.utils.toWei(this.amount.value, 'Ether')
+                  this.transfer(recipient, amount)
+                }}>
+                  <div className="form-group mr-sm-2">
+                    <input
+                      id="recipient"
+                      type="text"
+                      ref={(input) => { this.recipient = input }}
+                      className="form-control"
+                      placeholder="Recipient Address"
+                      required />
+                  </div>
+                  <div className="form-group mr-sm-2">
+                    <input
+                      id="amount"
+                      type="text"
+                      ref={(input) => { this.amount = input }}
+                      className="form-control"
+                      placeholder="Amount"
+                      required />
+                  </div>
+                  <button type="submit" className="btn btn-primary btn-block">Send</button>
+                </form>
           </div>
+          </div>
+          
         </div>
       </div>
     );

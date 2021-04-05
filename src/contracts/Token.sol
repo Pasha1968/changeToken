@@ -2,7 +2,11 @@ pragma solidity ^0.5.0;
 
 
 // Должен быть разработан смарт-контракт монеты на базе стандарта ERC20.
-contract Token {
+
+// import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol";
+
+
+contract Token  {
     string  public name = "DApp Token";
     string  public symbol = "DAPP";
     uint256 public totalSupply = 1000000000000000000000000; // 1 million tokens
@@ -19,6 +23,8 @@ contract Token {
         address indexed _spender,
         uint256 _value
     );
+
+    
 
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;

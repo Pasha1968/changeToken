@@ -36,5 +36,12 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@openzeppelin/cli": "^2.8.2",
+    "@openzeppelin/contracts-ethereum-package": "^3.0.0",
+    "@openzeppelin/gsn-helpers": "^0.2.4",
+    "@openzeppelin/upgrades": "^2.8.0",
+    "ganache-cli": "^6.12.2"
+  }
 }
